@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jiajie Fu · 个人主页</title>
+  <title>Jiajie Fu · Personal Homepage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -28,7 +28,7 @@
       overflow-x: hidden;
     }
 
-    /* ── 粒子背景 ── */
+    /* particle background */
     #canvas {
       position: fixed;
       inset: 0;
@@ -36,7 +36,7 @@
       pointer-events: none;
     }
 
-    /* ── 布局 ── */
+    /* layout */
     main {
       position: relative;
       z-index: 1;
@@ -45,12 +45,35 @@
       padding: 80px 24px 120px;
     }
 
-    /* ── Hero ── */
+    /* hero */
     .hero {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 48px;
+      margin-bottom: 72px;
+    }
+
+    .hero-text {
+      flex: 1;
       display: flex;
       flex-direction: column;
       gap: 16px;
-      margin-bottom: 72px;
+    }
+
+    .hero-photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(74, 222, 128, 0.4);
+      box-shadow: 0 0 32px rgba(74, 222, 128, 0.15);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 640px) {
+      .hero { flex-direction: column-reverse; gap: 24px; }
+      .hero-photo { width: 120px; height: 120px; }
     }
 
     .badge {
@@ -106,7 +129,7 @@
       font-weight: 400;
     }
 
-    /* 打字光标 */
+    /* blinking cursor */
     .cursor {
       display: inline-block;
       width: 2px; height: 1.1em;
@@ -153,7 +176,7 @@
       transform: translateY(-2px);
     }
 
-    /* ── 卡片通用 ── */
+    /* card */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -166,7 +189,7 @@
       transform: translateY(-3px);
     }
 
-    /* ── Section 标题 ── */
+    /* section label */
     .section-label {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -176,7 +199,50 @@
       margin-bottom: 24px;
     }
 
-    /* ── 技能栏 ── */
+    /* news */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 56px;
+    }
+
+    .news-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .news-item:hover {
+      border-color: rgba(74,222,128,0.25);
+      transform: translateX(4px);
+    }
+
+    .news-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    .news-text {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .news-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* skills */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -222,7 +288,7 @@
 
     .skill-item.visible .skill-fill { transform: scaleX(1); }
 
-    /* ── 项目卡片 ── */
+    /* project cards */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -292,24 +358,65 @@
       border: 1px solid rgba(74,222,128,0.2);
     }
 
-    /* ── GitHub 统计 ── */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    /* publications */
+    .pub-list {
+      display: flex;
+      flex-direction: column;
       gap: 16px;
       margin-bottom: 56px;
     }
 
-    @media (max-width: 560px) { .stats-grid { grid-template-columns: 1fr; } }
-
-    .stats-grid img {
-      width: 100%;
-      border-radius: 12px;
+    .pub-item {
+      background: var(--surface);
       border: 1px solid var(--border);
-      display: block;
+      border-radius: 14px;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .pub-item:hover {
+      border-color: rgba(167,139,250,0.35);
+      transform: translateY(-3px);
     }
 
-    /* ── 社交链接 ── */
+    .pub-venue {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--purple);
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .ccf-tag {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      background: rgba(34,211,238,0.1);
+      color: var(--cyan);
+      border: 1px solid rgba(34,211,238,0.25);
+      letter-spacing: 0.5px;
+    }
+
+    .pub-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.5;
+      text-decoration: none;
+    }
+    .pub-title:hover { color: var(--cyan); }
+
+    .pub-meta {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* social links */
     .social-row {
       display: flex;
       gap: 12px;
@@ -356,32 +463,61 @@
 <main>
   <!-- Hero -->
   <section class="hero">
-    <div class="badge">Available for opportunities</div>
+    <div class="hero-text">
+      <div class="badge">Available for opportunities</div>
 
-    <h1>Hi, I'm <span class="name">Jiajie Fu</span><span class="cursor"></span></h1>
+      <h1>Hi, I'm <span class="name">Jiajie Fu</span><span class="cursor"></span></h1>
 
-    <p class="subtitle">
-      CS student @ <span>Zhejiang University</span> · Hangzhou, China<br>
-      Building things with code, curiosity, and coffee.
-    </p>
+      <p class="subtitle">
+        CS student @ <span>Zhejiang University</span> · Hangzhou, China<br>
+        Building things with code, curiosity, and fries.
+      </p>
 
-    <div class="hero-links">
-      <a class="btn btn-primary" href="https://github.com/FuJiaJie123" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a class="btn btn-ghost" href="https://blog.csdn.net/qq_48697816" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        CSDN 博客
-      </a>
-      <a class="btn btn-ghost" href="https://gitee.com/fujiajie123123" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0C5.364 0 0 5.364 0 11.984c0 6.623 5.364 11.984 11.984 11.984 6.623 0 11.984-5.361 11.984-11.984C23.968 5.364 18.607 0 11.984 0zm6.09 8.557l-1.123 5.589c-.093.459-.525.783-.987.755H8.696c-.462.028-.894-.296-.987-.755L6.586 8.557c-.044-.218.004-.445.13-.624a.747.747 0 0 1 .528-.289h9.48a.747.747 0 0 1 .528.289c.126.179.174.406.13.624h-.308z"/></svg>
-        Gitee
-      </a>
+      <div class="hero-links">
+        <a class="btn btn-primary" href="https://github.com/FuJiaJie123" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a class="btn btn-ghost" href="https://blog.csdn.net/qq_48697816" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          CSDN Blog
+        </a>
+        <a class="btn btn-ghost" href="https://gitee.com/fujiajie123123" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0C5.364 0 0 5.364 0 11.984c0 6.623 5.364 11.984 11.984 11.984 6.623 0 11.984-5.361 11.984-11.984C23.968 5.364 18.607 0 11.984 0zm6.09 8.557l-1.123 5.589c-.093.459-.525.783-.987.755H8.696c-.462.028-.894-.296-.987-.755L6.586 8.557c-.044-.218.004-.445.13-.624a.747.747 0 0 1 .528-.289h9.48a.747.747 0 0 1 .528.289c.126.179.174.406.13.624h-.308z"/></svg>
+          Gitee
+        </a>
+      </div>
+    </div>
+
+    <img src="pics.jpg" alt="Jiajie Fu" class="hero-photo" />
+  </section>
+
+  <!-- News -->
+  <section style="margin-bottom: 56px;">
+    <p class="section-label">// news</p>
+    <div class="news-list">
+      <div class="news-item">
+        <div class="news-dot"></div>
+        <div class="news-text">
+          I contributed to the open source project <strong>OpenViking</strong>, which has reached <strong>22.4k stars</strong> on GitHub — feel free to join and explore!
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-dot"></div>
+        <div class="news-text">
+          Graduated from <strong>Zhejiang University</strong> with a Master's degree, awarded <strong>Provincial Outstanding Graduate</strong> and <strong>National Scholarship</strong>.
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-dot"></div>
+        <div class="news-text">
+          Paper accepted at <strong>SIGMOD 2026</strong>: <em>In-context Clustering-based Entity Resolution with Large Language Models: A Design Space Exploration</em>.
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 技能 -->
+  <!-- Tech Stack -->
   <section style="margin-bottom: 56px;">
     <p class="section-label">// tech stack</p>
     <div class="skills-grid">
@@ -424,28 +560,27 @@
     </div>
   </section>
 
-  <!-- 项目 -->
+  <!-- Projects -->
   <section style="margin-bottom: 56px;">
     <p class="section-label">// projects</p>
     <div class="projects-grid">
-      <a class="project-card" href="https://github.com/FuJiaJie123/snake" target="_blank">
-        <div class="project-icon">🐍</div>
-        <div class="project-title">贪吃蛇</div>
+      <a class="project-card" href="https://github.com/volcengine/OpenViking" target="_blank">
+        <div class="project-icon">🛡️</div>
+        <div class="project-title">OpenViking</div>
         <div class="project-desc">
-          经典贪吃蛇游戏，纯原生 HTML/CSS/JS 实现，深色主题，随分数动态提速，Canvas 渲染。与 Claude 合作完成的第一个项目。
+          An open source project I deeply contributed to, with 22.4k+ stars. Feel free to reach out and collaborate!
         </div>
         <div class="project-tags">
-          <span class="tag">JavaScript</span>
-          <span class="tag">Canvas</span>
-          <span class="tag">Game</span>
+          <span class="tag">Open Source</span>
+          <span class="tag">22.4k ★</span>
         </div>
       </a>
 
-      <div class="project-card" style="cursor:default;">
+<div class="project-card" style="cursor:default;">
         <div class="project-icon">🚀</div>
-        <div class="project-title">更多项目</div>
+        <div class="project-title">More Projects</div>
         <div class="project-desc">
-          持续构建中…欢迎访问 GitHub 主页查看最新动态。
+          Still building… check my GitHub for the latest updates.
         </div>
         <div class="project-tags">
           <span class="tag">Coming Soon</span>
@@ -454,31 +589,34 @@
     </div>
   </section>
 
-  <!-- GitHub 统计 -->
+  <!-- Publications -->
   <section style="margin-bottom: 56px;">
-    <p class="section-label">// github stats</p>
-    <div class="stats-grid">
-      <img
-        src="https://github-readme-stats.vercel.app/api?username=FuJiaJie123&hide_title=true&hide_border=true&show_icons=true&theme=tokyonight&bg_color=0d1117&text_color=c9d1d9&icon_color=4ade80"
-        alt="GitHub Stats"
-        loading="lazy"
-      />
-      <img
-        src="https://github-readme-stats.vercel.app/api/top-langs/?username=FuJiaJie123&hide_title=true&hide_border=true&layout=compact&theme=tokyonight&bg_color=0d1117&text_color=c9d1d9"
-        alt="Top Languages"
-        loading="lazy"
-      />
+    <p class="section-label">// publications</p>
+    <div class="pub-list">
+      <div class="pub-item">
+        <div class="pub-venue">SIGMOD 2026 <span class="ccf-tag">CCF-A</span></div>
+        <a class="pub-title" href="https://dl.acm.org/doi/10.1145/3749170" target="_blank">
+          In-context Clustering-based Entity Resolution with Large Language Models: A Design Space Exploration
+        </a>
+        <div class="pub-meta">ACM SIGMOD International Conference on Management of Data</div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ICDE 2025 <span class="ccf-tag">CCF-A</span></div>
+        <a class="pub-title" href="https://www.computer.org/csdl/proceedings-article/icde/2025/360300a557/26FZzklJ9Sw" target="_blank">
+          Time-Aware Influence Minimization via Blocking Social Networks
+        </a>
+        <div class="pub-meta">IEEE International Conference on Data Engineering</div>
+      </div>
     </div>
   </section>
 
-  <!-- 关于 -->
+  <!-- About -->
   <section style="margin-bottom: 56px;">
     <p class="section-label">// about</p>
     <div class="card">
       <p style="line-height:1.8; font-size:15px; color:#94a3b8;">
-        浙江大学在读，专注于软件工程与全栈开发。
-        热爱折腾各种有意思的小项目，从游戏到工具，从前端到后端。<br><br>
-        如有合作或交流，欢迎通过以下方式找到我 👇
+        An engineer exploring agent-related gadgets, mostly in Agent Memory.<br><br>
+        Feel free to reach out through any of the channels below 👇
       </p>
       <div class="social-row" style="margin-top:20px;">
         <a class="social-link" href="https://github.com/FuJiaJie123" target="_blank">GitHub</a>
@@ -494,7 +632,7 @@
 </footer>
 
 <script>
-  // ── 粒子背景 ──────────────────────────────────────────────────────────────
+  // particle background
   const canvas = document.getElementById('canvas');
   const ctx    = canvas.getContext('2d');
 
@@ -559,7 +697,7 @@
   }
   animate();
 
-  // ── 技能条 IntersectionObserver ───────────────────────────────────────────
+  // skill bar intersection observer
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.3 });
